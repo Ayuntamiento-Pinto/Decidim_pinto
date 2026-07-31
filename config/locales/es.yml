@@ -1,0 +1,7 @@
+es:
+  decidim:
+    authorization_handlers:
+      file_authorization_handler:
+        fields:
+          age: Edad mínima
+          max_age: Edad máxima

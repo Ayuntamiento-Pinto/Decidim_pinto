@@ -67,3 +67,23 @@ Gemfile.save
 #Instalación mal ubicada de Limesurveys
 /public/assets/formularios
 /public/formularios
+
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
+
+# Archivos renombrados con sufijo de versión antigua
+*0.27.10
+
+# Copias antiguas conservadas para diferenciar de la nueva versión
+*.OLD
+*.old
+
+# Copias de seguridad
+*.bak
+
+# Archivos marcados como deshabilitados
+*disabled

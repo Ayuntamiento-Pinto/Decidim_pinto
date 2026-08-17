@@ -85,11 +85,14 @@ Rails.application.config.i18n.default_locale = Decidim.default_locale
 
 # Inform Decidim about the assets folder
 Decidim.register_assets_path File.expand_path("app/packs", Rails.application.root)
-Decidim::Verifications.register_workflow(:file_authorization_handler) do |workflow|
-  workflow.form = "FileAuthorizationHandler"
-  workflow.action_authorizer = "Decidim::AgeActionAuthorization::Authorizer"
-  workflow.options do |options|
-    options.attribute :age, type: :string, required: false
-    options.attribute :max_age, type: :string, required: false
+Rails.application.config.after_initialize do
+  Decidim::Verifications.unregister_workflow(:file_authorization_handler) # Añadido para evitar duplicidad, al cargar de forma personalizada con age-verification el modulo file_authorization_handle
+  Decidim::Verifications.register_workflow(:file_authorization_handler) do |workflow|
+    workflow.form = "FileAuthorizationHandler"
+    workflow.action_authorizer = "Decidim::AgeActionAuthorization::Authorizer"
+    workflow.options do |options|
+      options.attribute :age, type: :string, required: false
+      options.attribute :max_age, type: :string, required: false
+    end
   end
 end

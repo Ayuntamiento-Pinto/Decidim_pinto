@@ -4,46 +4,49 @@ source "https://rubygems.org"
 
 ruby RUBY_VERSION
 
-DECIDIM_VERSION = { git: "https://github.com/CodiTramuntana/decidim.git", branch: "release/0.27-stable" }.freeze
-
+DECIDIM_VERSION = { git: "https://github.com/decidim/decidim.git", tag: "v0.28.5" }.freeze
+###############
+# Gema Decidim
+###############
 gem "decidim", DECIDIM_VERSION
-# gem "decidim-age_action_authorization", git: "https://github.com/diputacioBCN/decidim-diba.git", glob: "decidim-age_action_authorization/*.gemspec"
-gem "decidim-age_action_authorization", git: "https://github.com/DiputacioBarcelona/decidim-diba.git", branch: "upgrade_0.27"
-gem "decidim-conferences"
-gem "decidim-consultations"
-gem "decidim-decidim_awesome", git: "https://github.com/decidim-ice/decidim-module-decidim_awesome"
-gem "decidim-file_authorization_handler", git: "https://github.com/CodiTramuntana/decidim-file_authorization_handler.git", tag: "v0.27.1.0"
-gem "decidim-term_customizer", git: "https://github.com/mainio/decidim-module-term_customizer", branch: "master"
-gem "decidim-spam_detection"
 
-# temporal solution while gems embrace new psych 4 (the default in Ruby 3.1) behavior.
-gem "psych", "< 4"
+###################
+#Modulos de Decidim
+###################
+gem "decidim-conferences", DECIDIM_VERSION
+# gem "decidim-consultations" # Anulado por incompatibilidad oficial
 
-gem "puma"
-gem "uglifier", ">= 1.3.0"
-gem "webpacker"
+#####################
+# Modulos de terceros
+#####################
+gem "decidim-age_action_authorization", git: "https://github.com/DiputacioBarcelona/decidim-diba.git", branch: "update_0.28"
+  # Gemas Dependencia
+#
+gem "decidim-decidim_awesome", git: "https://github.com/decidim-ice/decidim-module-decidim_awesome", tag: "v0.11.4"
+  # Gemas Dependencia
+#
+gem "decidim-file_authorization_handler", git: "https://github.com/CodiTramuntana/decidim-file_authorization_handler.git", tag: "v0.28.2.2"
+  # Gemas Dependencia
+#
+gem "decidim-term_customizer", git: "https://github.com/mainio/decidim-module-term_customizer", branch: "release/0.28-stable"
+#
+
+
+# Gemas Necesarias
+# gem "webpacker" # retirado en la 0.28.x
 gem "wicked_pdf"
-
-gem "figaro", ">= 1.1.1"
-gem "openssl"
-
-# Remove this nokogiri forces version at any time but make sure that no __truncato_root__ text appears in the cards in general.
-# More exactly in comments in the homepage and in processes cards in the processes listing
-gem "nokogiri", "1.13.3"
-
-# if deploying to a dedicated server
+gem "figaro"
+gem "uglifier"
 gem "daemons"
 gem "delayed_job_active_record"
 gem "whenever"
-# elsif deploying to a PaaS like Heroku
-# gem "redis"
-# gem "sidekiq"
-group :production do
-  gem "aws-sdk-s3", require: false
-  gem "fog-aws"
-  gem "rack-ssl-enforcer"
-end
-# endif
+gem "openssl"
+
+# temporal solution while gems embrace new psych 4 (the default in Ruby 3.1) behavior.
+# gem "psych", "< 4" # Innecesario en 0.28
+
+# gem "puma"
+
 
 group :development, :test do
   gem "better_errors"
@@ -57,9 +60,8 @@ end
 group :development do
   gem "letter_opener_web"
   gem "listen"
-  gem "spring"
-  gem "spring-watcher-listen", "~> 2.0.0"
+ # gem "spring" # se anulan los spring porque ya vienen forzados por dependencias en versiones 0.28
+ # gem "spring-watcher-listen", "~> 2.0.0"
   gem "web-console"
 end
 
-gem "decidim-cdtb", "~> 0.2.1"

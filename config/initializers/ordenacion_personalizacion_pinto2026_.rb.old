@@ -1,0 +1,20 @@
+# personalizacion_aLabs/Pinto_2026 - INICIO
+Rails.application.config.to_prepare do
+  Decidim::ParticipatoryProcesses::GroupParticipatoryProcesses.class_eval do
+    def query
+      Decidim::ParticipatoryProcess.where(participatory_process_group: @group)
+                                   .order(weight: :asc, start_date: :desc)
+    end
+  end
+
+  Decidim::ParticipatoryProcesses::OrganizationPublishedParticipatoryProcesses.class_eval do
+    def query
+      Decidim::Query.merge(
+        Decidim::ParticipatoryProcesses::OrganizationParticipatoryProcesses.new(@organization),
+        Decidim::ParticipatoryProcesses::VisibleParticipatoryProcesses.new(@user),
+        Decidim::ParticipatoryProcesses::PublishedParticipatoryProcesses.new
+      ).query.order(weight: :asc, start_date: :desc)
+    end
+  end
+end
+# personalizacion_aLabs/Pinto_2026 - FIN

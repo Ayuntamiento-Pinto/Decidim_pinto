@@ -67,3 +67,8 @@ Gemfile.save
 #Instalación mal ubicada de Limesurveys
 /public/assets/formularios
 /public/formularios
+/public/sw.js*
+
+#Herramientas de aLabs
+/aLabs_tools/
+*.sql

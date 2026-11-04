@@ -1,0 +1,74 @@
+<%# personalizacion_aLabs/Pinto_2026 - INICIO %>
+  <div class="hidden">
+    <%= link_to decidim.pages_path, class: "main-bar__links-desktop__item", "aria-label": t("decidim.menu.help") do %>
+      <%= icon "question-line" %><span><%= t("decidim.menu.help") %></span>
+    <% end %>
+  </div>
+<%# personalizacion_aLabs/Pinto_2026 - FIN %>
+
+<%# personalizacion_aLabs/Pinto_2026 - INICIO %>
+<div class="main-bar__links-desktop__item-wrapper">
+  <div>
+    <%= link_to decidim_participatory_processes.participatory_processes_path, class: "main-bar__links-desktop__item", "aria-label": t("decidim.admin.menu.participatory_processes", default: "Proceso") do %>
+      <%= icon "treasure-map-line" %><span><%= t("decidim.admin.menu.participatory_processes", default: "Proceso") %></span>
+    <% end %>
+  </div>
+  <div>
+    <%= link_to decidim_assemblies.assemblies_path, class: "main-bar__links-desktop__item", "aria-label": t("decidim.menu.assemblies", default: "Asamblea") do %>
+      <%= icon "government-line" %><span><%= t("decidim.menu.assemblies", default: "Asamblea") %></span>
+    <% end %>
+  </div>
+  <div>
+    <%= link_to decidim_conferences.conferences_path, class: "main-bar__links-desktop__item", "aria-label": t("decidim.admin.menu.conferences", default: "Jornada") do %>
+      <%= icon "calendar-line" %><span><%= t("decidim.admin.menu.conferences", default: "Jornada") %></span>
+    <% end %>
+  </div>
+  <div>
+    <%= link_to decidim.page_path("concejaliaparticipacion"), class: "main-bar__links-desktop__item", "aria-label": t("menu.concejalia", scope: "decidim", default: "Concejalía") do %>
+      <%= icon "flag-line" %><span><%= t("menu.concejalia", scope: "decidim", default: "Concejalía") %></span>
+    <% end %>
+  </div>
+</div>
+<%# personalizacion_aLabs/Pinto_2026 - FIN %>
+
+<% if !current_user %>
+  <div>
+    <%= link_to decidim.new_user_session_path, class: "main-bar__links-desktop__item", "aria-label": t("layouts.decidim.header.log_in") do %>
+      <%= icon "user-line" %><span><%= t("layouts.decidim.header.log_in") %></span>
+    <% end %>
+  </div>
+<% else %>
+  <div class="main-bar__dropdown-container">
+    <button id="trigger-dropdown-account" class="main-bar__dropdown-trigger" data-component="dropdown" data-target="dropdown-menu-account">
+      <% unread_data = current_user_unread_data %>
+      <% if unread_data[:unread_items] %>
+        <%= content_tag :span, "", class: "main-bar__notification", data: unread_data %>
+        <% if unread_data[:unread_notifications] %>
+          <%= content_tag :span, t("layouts.decidim.user_menu.unread_notifications"), class: "sr-only" %>
+        <% end %>
+        <% if unread_data[:unread_conversations] %>
+          <%= content_tag :span, t("layouts.decidim.user_menu.unread_conversations"), class: "sr-only" %>
+        <% end %>
+      <% end %>
+      <% if current_user.avatar.attached? %>
+        <span class="main-bar__avatar">
+          <span>
+            <%= image_tag(
+                  current_user.attached_uploader(:avatar).variant_url(:thumb),
+                  alt: t("decidim.author.avatar", name: decidim_sanitize(current_user.avatar.name))
+                ) %>
+          </span>
+        </span>
+      <% else %>
+        <span class="main-bar__links-desktop__item-account">
+          <%= text_initials(current_user.name) %>
+        </span>
+      <% end %>
+    </button>
+    <div id="dropdown-menu-account" aria-hidden="true">
+      <ul class="dropdown dropdown__bottom main-bar__dropdown">
+        <%= render partial: "layouts/decidim/header/main_links_dropdown", locals: { unread_data: } %>
+      </ul>
+    </div>
+  </div>
+<% end %>

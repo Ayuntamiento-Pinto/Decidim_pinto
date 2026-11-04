@@ -1,0 +1,73 @@
+# frozen_string_literal: true
+
+source "https://rubygems.org"
+
+ruby RUBY_VERSION
+
+DECIDIM_VERSION = { git: "https://github.com/decidim/decidim.git", tag: "v0.27.10" }.freeze
+###############
+# Gema Decidim
+###############
+gem "decidim", DECIDIM_VERSION
+
+###################
+#Modulos de Decidim
+###################
+gem "decidim-conferences", DECIDIM_VERSION
+gem "decidim-consultations", DECIDIM_VERSION
+
+#####################
+# Modulos de terceros
+#####################
+gem "decidim-age_action_authorization", git: "https://github.com/DiputacioBarcelona/decidim-diba.git", branch: "upgrade_0.27"
+  # Gemas Dependencia
+#
+gem "decidim-decidim_awesome", git: "https://github.com/decidim-ice/decidim-module-decidim_awesome"
+  # Gemas Dependencia
+#
+#gem "decidim-file_authorization_handler", git: "https://github.com/CodiTramuntana/decidim-file_authorization_handler.git", tag: "v0.27.1.0"
+  # Problema de incompatibilidad con version de ruby exigida por el repo oficial ruby 3.0.x, se deja desactivada para reincorporarla en la 0.28.x
+  # Gemas Dependencia
+#
+gem "decidim-term_customizer", git: "https://github.com/mainio/decidim-module-term_customizer", branch: "master"
+  # Gemas Dependencia
+#
+
+
+# Gemas Necesarias
+gem "webpacker"
+gem "wicked_pdf"
+gem "figaro", ">= 1.1.1"
+gem "uglifier", ">= 1.3.0"
+gem "daemons"
+gem "delayed_job_active_record"
+gem "whenever"
+gem "openssl"
+
+#temporal retirar en versiones siguientes
+gem "json", "< 3"
+
+gem "devise_invitable", "2.0.9"
+# temporal solution while gems embrace new psych 4 (the default in Ruby 3.1) behavior.
+gem "psych", "< 4"
+
+# gem "puma"
+
+
+group :development, :test do
+  gem "better_errors"
+  gem "binding_of_caller"
+  gem "bootsnap"
+  gem "byebug", platform: :mri
+  gem "decidim-dev", DECIDIM_VERSION
+  gem "faker", "~> 2.19.0"
+end
+
+group :development do
+  gem "letter_opener_web"
+  gem "listen"
+  gem "spring"
+  gem "spring-watcher-listen", "~> 2.0.0"
+  gem "web-console"
+end
+
